@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 
+  first_name: MyString
+  last_name: MyString
+  email_address: MyString
+  avatar_url: MyString
+  calendly_token: MyString
+
+two:
+  id: 
+  first_name: MyString
+  last_name: MyString
+  email_address: MyString
+  avatar_url: MyString
+  calendly_token: MyString

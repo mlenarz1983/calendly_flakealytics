@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 
+  user_id: 1
+  event_type_id: 1
+  invitee_name: MyString
+  invitee_email: MyString
+  reason: MyString
+
+two:
+  id: 
+  user_id: 1
+  event_type_id: 1
+  invitee_name: MyString
+  invitee_email: MyString
+  reason: MyString

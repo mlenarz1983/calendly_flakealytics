@@ -1,0 +1,2 @@
+class CancelEvent < ApplicationRecord
+end
