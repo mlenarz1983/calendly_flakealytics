@@ -63,6 +63,8 @@
     window.calendly.availableColors = ['#d78257', '#35362b',  '#7e523a', '#e2c287', '#bebcbb'];
 
     function refreshFlakesByEmailChart(flakesByEmail) {
+        //todo: clean old chart
+
         var counts = [];
         var chartColors = [];
         var chartLabels = [];
@@ -101,6 +103,8 @@
     }
 
     function refreshFlakesByEventTypeChart(flakesByDate) {
+        //todo: clean old chart
+
         var eventTypeCounts = [];
         var chartColors = [];
         var chartLabels = [];
@@ -149,8 +153,6 @@
     }
 
     function refreshFlakesByDateChart(flakesByDate) {
-
-        //todo: loading indicator
         //todo: clean old chart
 
         var dateLabels = [];
@@ -227,10 +229,38 @@
         window.byDateChart = new Chart(ctx, config);
     }
 
+    function queryAndRefreshStats(userId) {
+        // in a real-world application, the ajax API would be either jQuery or something baked into angular/react
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'stats/' + userId);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+
+                //todo: parse json
+
+                refreshFlakesByDateChart(flakesByDate);
+                refreshFlakesByEventTypeChart(flakesByDate);
+                refreshFlakesByEmailChart(flakesByEmail);
+            }
+            else {
+                //todo: graceful error message
+            }
+        };
+        xhr.send();
+
+        //todo: loading indicator
+
+    }
+
     window.onload = function() {
-        refreshFlakesByDateChart(flakesByDate);
-        refreshFlakesByEventTypeChart(flakesByDate);
-        refreshFlakesByEmailChart(flakesByEmail);
+
+        queryAndRefreshStats(6);
+
+
+        // refreshFlakesByDateChart(flakesByDate);
+        // refreshFlakesByEventTypeChart(flakesByDate);
+        // refreshFlakesByEmailChart(flakesByEmail);
     };
 
 
