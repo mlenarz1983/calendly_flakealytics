@@ -1,2 +1,123 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class='header'>
+    <h1 class='title'>Calendly Flake-alytics</h1>
+    <h3 class='subtitle'>Who's flaking on your meetings?</h3>
+
+    <div class='user-info'>
+        TODO
+    </div>
+</div>
+
+<div class='content'>
+
+    <div style="width:90%;">
+        <canvas id="canvas"></canvas>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    var flakesByDate = {
+        '15min': [
+            {'date': '2018-10-09', 'count': 4},
+            {'date': '2018-10-10', 'count': 7},
+            {'date': '2018-10-11', 'count': 2},
+            {'date': '2018-10-12', 'count': 3},
+            {'date': '2018-10-13', 'count': 15},
+            {'date': '2018-10-14', 'count': 9},
+            {'date': '2018-10-15', 'count': 6}
+        ],
+        '30min': [
+            {'date': '2018-10-09', 'count': 12},
+            {'date': '2018-10-10', 'count': 5},
+            {'date': '2018-10-11', 'count': 5},
+            {'date': '2018-10-12', 'count': 8},
+            {'date': '2018-10-13', 'count': 5},
+            {'date': '2018-10-14', 'count': 2},
+            {'date': '2018-10-15', 'count': 6}
+        ]
+    };
+
+    window.calendly = window.calendly || {};
+    window.calendly.availableColors = ['#134388',  '#2288AA',  '#A2385A'];
+
+    function refreshFlakesByDateChart(flakesByDate) {
+
+        var dateLabels = [];
+
+        // gracefully handle situation where there are no event types / stats
+        if (Object.keys(flakesByDate).length > 1) {
+            // the flakesByDate will always have the same keys across each of the event types.  i.e. the dates
+            // from the first event type will always match the dates from additional event types.
+            for (var i=0; i<flakesByDate[Object.keys(flakesByDate)[0]].length; i++) {
+                dateLabels.push(flakesByDate[Object.keys(flakesByDate)[0]][i]['date']);
+            }
+        }
+
+        var datasets = [];
+        for (var eventType in flakesByDate) {
+            if (flakesByDate.hasOwnProperty(eventType)) { 
+                var dataset = {
+                    label: eventType,
+                    backgroundColor: window.calendly.availableColors[datasets.length % window.calendly.availableColors.length],
+                    borderColor: window.calendly.availableColors[datasets.length % window.calendly.availableColors.length],
+                    fill: false,
+                    data: []
+                };
+                for (var i=0; i<flakesByDate[eventType].length; i++) {
+                    dataset['data'].push(flakesByDate[eventType][i]['count']);     
+                }
+                datasets.push(dataset);
+            }
+        }
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: dateLabels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Flakes By Date'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Date'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Cancellations'
+                        }
+                    }]
+                }
+            }
+        };
+
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    }
+
+    window.onload = function() {
+        refreshFlakesByDateChart(flakesByDate);
+    };
+
+
+</script>
