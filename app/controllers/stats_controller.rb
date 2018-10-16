@@ -10,9 +10,6 @@ class StatsController < ApplicationController
     # todo: auth checking (session should have access to user.  determined by db join)
     # todo: check cache
 
-    # users = User.all
-    # render json: users
-
-    render json: CancelEvent.getTimeStats(user)
+    render json: { :emailStats => CancelEvent.getEmailStats(user), :timeStats => CancelEvent.getTimeStats(user) }
   end
 end

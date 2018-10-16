@@ -21,4 +21,17 @@ class CancelEvent < ApplicationRecord
             user.id
         ]
     end
+
+    def self.getEmailStats(user)
+        # see comments in getTimeStats
+        CancelEvent.find_by_sql [
+            "SELECT substr(invitee_email, pos+1) AS emailProvider, count(*) AS instances
+            FROM
+              (SELECT *, instr(invitee_email,'@') AS pos FROM cancel_events) e
+              INNER JOIN event_types t ON e.event_type_id==t.id
+            WHERE t.user_id=?
+            GROUP BY substr(invitee_email, pos+1)",
+            user.id
+        ]
+    end
 end
