@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :first_name
       t.string :last_name
       t.string :avatar_url
+      t.string :api_key
+      t.string :external_id, index: true
 
       t.timestamps
     end

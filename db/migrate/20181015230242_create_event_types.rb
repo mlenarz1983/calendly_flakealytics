@@ -4,6 +4,7 @@ class CreateEventTypes < ActiveRecord::Migration[5.2]
       t.belongs_to :user, index: true
       t.integer :user_id
       t.string :name
+      t.string :external_id, index: true
       t.timestamps
     end
 

@@ -8,6 +8,7 @@ class CreateCancelEvents < ActiveRecord::Migration[5.2]
       t.string :invitee_name
       t.string :invitee_email
       t.string :reason
+      t.string :external_id, index: true
 
       t.timestamps     
     end
