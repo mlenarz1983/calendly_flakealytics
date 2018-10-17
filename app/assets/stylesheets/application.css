@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+
+.header .user-info {
+    float: right;
+    min-width: 240px;
+}
+
+.header .user-info .user-icon {
+    display: inline-block;
+    max-width: 40px;
+    float: left;
+}
+
+.header .user-info .user-fullname,
+.header .user-info .user-email {
+    display: inline-block;
+    margin-left: 20px;
+}
