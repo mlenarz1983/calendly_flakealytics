@@ -14,20 +14,29 @@
 </div>
 
 <div class='content'>
-
-    <div class="first-column">
-        <div style="width:100%;" class='date-chart-container'>
-            <canvas id="date-canvas"></canvas>
-        </div>
+    <div id="loading-indicator">
+        loading...
     </div>
 
-    <div class="second-column">
-        <div style="width:100%;" class='event-type-chart-container'>
-            <canvas id="event-type-canvas"></canvas>
+    <div id="zero-state" style="display: none">
+        No users found.  <a class='add-user-button' href=''>Add one.</a>
+    </div>
+
+    <div id="dashboard" style="display: none">
+        <div class="first-column">
+            <div style="width:100%;" class='date-chart-container'>
+                <canvas id="date-canvas"></canvas>
+            </div>
         </div>
 
-        <div style="width:100%;" class='email-chart-container'>
-            <canvas id="email-canvas"></canvas>
+        <div class="second-column">
+            <div style="width:100%;" class='event-type-chart-container'>
+                <canvas id="event-type-canvas"></canvas>
+            </div>
+
+            <div style="width:100%;" class='email-chart-container'>
+                <canvas id="email-canvas"></canvas>
+            </div>
         </div>
     </div>
 </div>
@@ -236,6 +245,12 @@
     }
 
     function queryAndRefreshStats(userId) {
+        var loadingIndicator = document.getElementById("loading-indicator");
+        var dashboard = document.getElementById("dashboard");
+
+        loadingIndicator.style.display = "block";
+        dashboard.style.display = "none";
+
         // in a real-world application, the ajax API would be either jQuery or something baked into angular/react
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'stats/' + userId);
@@ -252,11 +267,11 @@
             else {
                 //todo: graceful error message
             }
+
+            loadingIndicator.style.display = "none";
+            dashboard.style.display = "block";
         };
         xhr.send();
-
-        //todo: loading indicator
-
     }
 
     window.onload = function() {
