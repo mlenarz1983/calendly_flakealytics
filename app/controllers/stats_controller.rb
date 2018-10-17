@@ -2,7 +2,6 @@ class StatsController < ApplicationController
   # GET /stats/:user_id
   def show
     # todo: check logged-in (I believe rails has middleware for this)
-    # todo: add support for versioning of the API
 
     user = User.find(params[:id])
 
