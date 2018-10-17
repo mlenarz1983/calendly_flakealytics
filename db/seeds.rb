@@ -28,7 +28,7 @@ CancelEvent.destroy_all
             name: e
         )
 
-        (Date.new(2018, 10, 01)..Date.new(2018, 10, 17)).each do |d|
+        (Date.new(2018, 10, 10)..Date.new(2018, 10, 17)).each do |d|
 
             rand(1..20).times do
 

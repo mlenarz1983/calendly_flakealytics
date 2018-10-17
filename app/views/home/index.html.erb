@@ -162,7 +162,8 @@
                     backgroundColor: window.calendly.availableColors[datasets.length % window.calendly.availableColors.length], // cycle colors
                     borderColor: window.calendly.availableColors[datasets.length % window.calendly.availableColors.length], // cycle colors
                     fill: false,
-                    data: []
+                    data: [],
+                    lineTension: 0 // don't interpolate
                 };
                 for (var i=0; i<flakesByDate[eventType].length; i++) {
                     dataset['data'].push(flakesByDate[eventType][i]['count']);     
