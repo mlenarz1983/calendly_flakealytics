@@ -8,11 +8,8 @@ class CancelEvent < ApplicationRecord
         # by event type name (vs id) since we enforce uniqueness in the logic responsible for 
         # adding new event types to the db.  SQL param does not need to be sanitized because the contract
         # for this method uses a user object (which we can trust).  
-        #
-        # This query also returns a null id parameter.  I'd make sure this wasn't in the result set, but
-        # I can't seem to find a way to stop this auto-magical behavior.
-        CancelEvent.find_by_sql [
-            "SELECT date(e.created_at) AS date, t.name AS eventType, count(*) AS instances
+        time_stats = CancelEvent.find_by_sql [
+            "SELECT date(e.created_at) AS date, t.name AS eventType, count(*) AS count
             FROM cancel_events e
                 INNER JOIN event_types t ON e.event_type_id==t.id
             WHERE t.user_id=?
@@ -20,6 +17,10 @@ class CancelEvent < ApplicationRecord
             ORDER BY event_type_id",
             user.id
         ]
+
+        # my preferred contract here would be {eventType: [{date, count} ...], eventType: [{date, count} ...]}
+        # none of the combinations of map + group_by that I tried did this, however...
+        time_stats.group_by{|s| s.eventType }
     end
 
     def self.getEmailStats(user)

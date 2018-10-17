@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
     # curl Calendly for user info.  this will be a test of whether the key is legit.  handle the curl library's 401 error.
     # todo: pull curl endpoint url from config file (vs. hard-coding)
-    # todo: move curl-ing logic to another class to easier testing (using mocked external endpoints)
+    # todo: move curl-ing logic to another class for easier testing (using mocked external endpoints)
     user_response = RestClient.get(
       "https://calendly.com/api/v1/users/me", 
       headers = {"X-TOKEN" => api_key}
