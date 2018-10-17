@@ -13,7 +13,7 @@ This is the first time I've ever written anything in ruby or rails.  Please don'
 In your local dev environment, make sure you have the latest version of ruby and the Rails framework.  Once you've got that set-up, it should be as simple as running
 
 ```
-rake db:drop db:create db:migrate
+rake db:drop db:create db:migrate db:seed
 ```
 
 This will seed your local database with simulated, demo data.  After that, start your local rails server and you should see a dashboard similar to the screenshot above.
