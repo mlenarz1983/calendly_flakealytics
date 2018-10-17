@@ -45,37 +45,7 @@
 
 
 <script type="text/javascript">
-
-    //todo: hit endpoints for data
-
-    var flakesByDate = {
-        '15min': [
-            {'date': '2018-10-09', 'count': 4},
-            {'date': '2018-10-10', 'count': 7},
-            {'date': '2018-10-11', 'count': 2},
-            {'date': '2018-10-12', 'count': 3},
-            {'date': '2018-10-13', 'count': 15},
-            {'date': '2018-10-14', 'count': 9},
-            {'date': '2018-10-15', 'count': 6}
-        ],
-        '30min': [
-            {'date': '2018-10-09', 'count': 12},
-            {'date': '2018-10-10', 'count': 5},
-            {'date': '2018-10-11', 'count': 5},
-            {'date': '2018-10-12', 'count': 8},
-            {'date': '2018-10-13', 'count': 5},
-            {'date': '2018-10-14', 'count': 2},
-            {'date': '2018-10-15', 'count': 6}
-        ]
-    };
-
-    var flakesByEmail = {
-        'dear_leader.gov.nk': 55,
-        'yahoo.com': 13,
-        'hotmail.com': 8,
-        'gmail.com': 5
-    };
-
+    
     window.calendly = window.calendly || {};
     window.calendly.availableColors = ['#d78257', '#35362b',  '#7e523a', '#e2c287', '#bebcbb'];
 
@@ -86,12 +56,13 @@
         var chartColors = [];
         var chartLabels = [];
 
-        for (var emailProvider in flakesByEmail) {
-            if (flakesByEmail.hasOwnProperty(emailProvider)) { 
-                chartColors.push(window.calendly.availableColors[chartLabels.length % window.calendly.availableColors.length]); // cycle colors
-                counts.push(flakesByEmail[emailProvider]);
-                chartLabels.push(emailProvider);
-            }
+        for (var i=0; i<flakesByEmail.length; i++) {
+            var row = flakesByEmail[i],
+                emailProvider = row['emailProvider'],
+                emailCount = row['count'];
+            chartColors.push(window.calendly.availableColors[chartLabels.length % window.calendly.availableColors.length]); // cycle colors
+            counts.push(emailCount);
+            chartLabels.push(emailProvider);
         }
 
         var config = {
@@ -258,13 +229,11 @@
         xhr.open('GET', 'stats/' + userId);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
+                var stats = JSON.parse(xhr.responseText);
 
-                //todo: parse json
-
-                refreshFlakesByDateChart(flakesByDate);
-                refreshFlakesByEventTypeChart(flakesByDate);
-                refreshFlakesByEmailChart(flakesByEmail);
+                refreshFlakesByDateChart(stats.timeStats);
+                refreshFlakesByEventTypeChart(stats.timeStats);
+                refreshFlakesByEmailChart(stats.emailStats);
             }
             else {
                 //todo: graceful error message

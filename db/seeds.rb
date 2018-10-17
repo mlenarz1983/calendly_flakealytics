@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-eventTypes = %w[15min 30min 60min coffee walkAndTalk]
+eventTypes = %w[30min coffee walkAndTalk]
 names = %w[Thelonious Sara Matt Felicia Alton]
 emailDomains = %w[gmail.com hotmail.com yahoo.com dear_leader.gov.nk]
 reasons = ["sick", "lazy", "asteroid", "dog ate homework"]
