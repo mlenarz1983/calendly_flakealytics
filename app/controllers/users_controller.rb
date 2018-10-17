@@ -46,11 +46,13 @@ class UsersController < ApplicationController
         api_key: api_key
     )
 
-    # POST to Calendly to register webhook.  we're only interested in the cancel event.  use mockbin to start with,
-    # since this application isn't being deployed anywhere public...
+    # POST to Calendly to register webhook.  we're only interested in the cancel event.  used mockbin to start with,
+    # since this application isn't being deployed anywhere public.  for repeated testing, however, I'm using a fake
+    # randomly-generated url to avoid duplicate webhook error from the API
     # todo: pull curl endpoint url from config file (vs. hard-coding)
     register_webhook_payload = {
-      url: 'https://mockbin.org/bin/07dfd238-f79b-4587-b12f-0a12a9c11617', 
+      # url: 'https://mockbin.org/bin/07dfd238-f79b-4587-b12f-0a12a9c11617', 
+      url: 'https://fake_website.pizza/' + SecureRandom.uuid,
       'events[]': 'invitee.canceled'
     }
 

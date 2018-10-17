@@ -24,6 +24,11 @@
         No users found.  <a class='add-user-button' href='#'>Add one</a>
     </div>
 
+    <div id="new-user-dashboard" style="display: none">
+        <p>Success!  User added</p>
+        <p>We're listening for flaky-ness.  Check back in a bit for your dashboard.</p> 
+    </div>
+
     <div id="dashboard" style="display: none">
         <div class="first-column">
             <div style="width:100%;" class='date-chart-container'>
@@ -252,7 +257,26 @@
         // - have validation checking for a value and the expected length
         // - make a client-side curl call to Calendly's API so that the user could get immediate feedback on whether their key exists
         var apiKey = window.prompt('Enter the API key from your Calendly account.');
-        console.log(apiKey);
+        if (apiKey) {
+            // in a real-world application, the ajax API would be either jQuery or something baked into angular/react
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'users');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var newUser = JSON.parse(xhr.responseText);
+                    // queryAndRefreshStats(newUser.id);
+                    var zeroState = document.getElementById('zero-state');
+                    var newUserDashboard = document.getElementById('new-user-dashboard');
+                    zeroState.style.display = "none";
+                    newUserDashboard.style.display = "block";
+                }
+                else {
+                    //todo: graceful error message
+                }
+            };
+            xhr.send(encodeURI('api_key=' + apiKey));
+        }
     }
 
     window.onload = function() {
