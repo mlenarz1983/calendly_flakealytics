@@ -1,6 +1,9 @@
 class EventsController < ApplicationController
+  # this is an external API, so we don't need this here
+  protect_from_forgery except: :create
+
   # POST /events
-  def new
+  def create
     # no need to check session/logged-in status since this endpoint is being hit by a calendly server
 
     # todo: consider putting the following logic behind some sort of queue.  it's probably okay to keep this endpoint
