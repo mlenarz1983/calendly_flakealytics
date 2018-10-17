@@ -2,6 +2,7 @@ require 'rest-client'
 
 class UsersController < ApplicationController
 
+  # todo: refactor client-side to utilize the forgery token
   protect_from_forgery except: :create
 
   # POST /users
