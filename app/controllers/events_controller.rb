@@ -30,5 +30,6 @@ class EventsController < ApplicationController
 
     # todo: persist event
 
+    # todo: return event object as json (just to be REST-ful-ish, not because Calendly needs the info that they just sent us)
   end
 end
