@@ -1,10 +1,12 @@
 <div class='header'>
     <div class='user-info'>
-        <img src="<%= @user.avatar_url %>" class="user-icon" />
-        
-        <div class="user-fullname"><%= @user.first_name %> <%= @user.last_name %></div>
-        <br/>
-        <div class="user-email"><%= @user.email_address %></div>
+        <% if @user %>
+            <img src="<%= @user.avatar_url %>" class="user-icon" />
+            
+            <div class="user-fullname"><%= @user.first_name %> <%= @user.last_name %></div>
+            <br/>
+            <div class="user-email"><%= @user.email_address %></div>
+        <% end %>
     </div>
 
     <h1 class='title'>Calendly Flake-alytics</h1>
@@ -14,12 +16,12 @@
 </div>
 
 <div class='content'>
-    <div id="loading-indicator">
+    <div id="loading-indicator" style="display: none">
         loading...
     </div>
 
     <div id="zero-state" style="display: none">
-        No users found.  <a class='add-user-button' href=''>Add one.</a>
+        No users found.  <a class='add-user-button' href='#'>Add one</a>
     </div>
 
     <div id="dashboard" style="display: none">
@@ -274,15 +276,27 @@
         xhr.send();
     }
 
+    function addUser() {
+        // normally, this would be a nice-looking dialog which would:
+        // - explain where the user could get their key (optionally with a link or screenshot of what this page looks like)
+        // - have validation checking for a value and the expected length
+        // - make a client-side curl call to Calendly's API so that the user could get immediate feedback on whether their key exists
+        var apiKey = window.prompt('Enter the API key from your Calendly account.');
+        console.log(apiKey);
+    }
+
     window.onload = function() {
+        <% if @user %>
+            queryAndRefreshStats(<%= @user.id %>);
+        <% else %>
+            var zeroState = document.getElementById("zero-state");
+            zeroState.style.display = "block";
+        <% end %>
 
-        queryAndRefreshStats(6);
-
-
-        // refreshFlakesByDateChart(flakesByDate);
-        // refreshFlakesByEventTypeChart(flakesByDate);
-        // refreshFlakesByEmailChart(flakesByEmail);
+        var addUserButtons = document.getElementsByClassName('add-user-button');
+        for (var i=0; i<addUserButtons.length; i++) {
+            addUserButtons[i].onclick=function() {addUser(); return false; }
+        }
     };
-
 
 </script>
