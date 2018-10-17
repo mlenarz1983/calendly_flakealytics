@@ -4,6 +4,8 @@ This is a toy project I put together to demonstrate a potential use of Calendly'
 
 This front-end of this application is written in plain javascript/html/css and the back-end is written in Ruby On Rails.
 
+![demo screenshot](demo_screenshot.png "Demo Screenshot")
+
 # Disclaimer
 
 This is the first time I've ever written anything in ruby or rails.  Please don't look to this an an example of RoR best-practices.  What you'll find here - on the back-end, anyway - is the result of just-in-time learning and examples adapted from tutorials.  I tried to do the right thing where possible. 
@@ -28,6 +30,7 @@ If you want to use this in a production environment, there's some extra work you
 
 # Missing Pieces
 
+* refactor css + js to proper file(s).  Right now, there's a lot of code in the index view.  I did this for speed of development and because of a new-ness to the conventions used by RoR.  Moving the js to a dedicate file would make it easier to read the code and to support things like file caching.
 * the word **todo** is sprinkled liberally around the application.  I would revisit each of these and consider whether they are important or not. 
 * as mentioned above, the webhook endpoint is currently still in the form of pseudocode.  The missing code is mostly boilerplate and I thought it would be more instructive to write-out design considerations.
 * auth-management.  the application currently does not have sessions/logins and as-such anyone can see analytics for any user.  we wouldn't want that in the real-world
